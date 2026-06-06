@@ -11,7 +11,7 @@ class MainActivity : Activity() {
         
         // Bina XML file ke direct code se UI bana rahe hain!
         val textView = TextView(this).apply {
-            text = "Hello Achal! bsns Kotlin App is Alive! 🔥"
+            text = "Hello Achal! welcome s Kotlin App is Alive! 🔥"
             textSize = 24f
             gravity = Gravity.CENTER
         }
