@@ -28,6 +28,7 @@ fun InstaVaultApp() {
         modifier = Modifier
             .fillMaxSize()
             .background(C.bg)
+            .systemBarsPadding() // Prevents overlap with time/battery
     ) {
         // Screen content
         Box(modifier = Modifier.fillMaxSize()) {
