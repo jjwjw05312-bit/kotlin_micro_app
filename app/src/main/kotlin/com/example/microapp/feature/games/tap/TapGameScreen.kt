@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,7 +56,8 @@ fun TapGameScreen(onNavigate: (Screen) -> Unit, viewModel: TapGameViewModel = vi
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 24.dp, end = 24.dp, top = 40.dp),
+                .verticalScroll(rememberScrollState())
+                .padding(start = 24.dp, end = 24.dp, top = 40.dp, bottom = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("🎯", fontSize = 60.sp, modifier = Modifier.padding(bottom = 12.dp))
@@ -184,7 +187,7 @@ fun TapGameScreen(onNavigate: (Screen) -> Unit, viewModel: TapGameViewModel = vi
             }
         } else {
             // Game area
-            Box(
+            BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(20.dp))
@@ -208,8 +211,8 @@ fun TapGameScreen(onNavigate: (Screen) -> Unit, viewModel: TapGameViewModel = vi
                             .fillMaxSize()
                             .wrapContentSize(Alignment.TopStart)
                             .offset(
-                                x = (s.x * 280).dp,
-                                y = (s.y * 400).dp
+                                x = maxWidth * s.x,
+                                y = maxHeight * s.y
                             )
                             .clickable {
                                 viewModel.tapSpark(s.id)

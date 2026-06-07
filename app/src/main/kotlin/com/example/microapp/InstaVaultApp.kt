@@ -32,13 +32,13 @@ fun InstaVaultApp() {
         bottomBar = {
             BottomNavBar(
                 activeScreen = activeScreen,
-                onNavigate = { currentScreen = it }
+                onNavigate = { currentScreen = it },
+                modifier = Modifier.navigationBarsPadding()
             )
         },
         containerColor = C.bg,
         modifier = Modifier
             .fillMaxSize()
-            .systemBarsPadding() // Prevents overlap with time/battery
     ) { innerPadding ->
         // Screen content
         Box(
