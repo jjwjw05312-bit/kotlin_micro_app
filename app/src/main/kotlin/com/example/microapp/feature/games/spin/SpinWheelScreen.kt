@@ -44,9 +44,9 @@ fun SpinWheelScreen(onNavigate: (Screen) -> Unit, viewModel: SpinWheelViewModel 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val animatedAngle = remember { Animatable(0f) }
-    val scope = rememberCoroutineScope()
 
     val segAngle = 360f / uiState.segments.size
+
 
     // Launch animation when targetAngle changes (spinning starts)
     LaunchedEffect(uiState.targetAngle) {
@@ -66,7 +66,7 @@ fun SpinWheelScreen(onNavigate: (Screen) -> Unit, viewModel: SpinWheelViewModel 
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 90.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Top bar: Back, Tag, Free/Day

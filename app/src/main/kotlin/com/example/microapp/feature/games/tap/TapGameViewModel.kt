@@ -1,6 +1,5 @@
 package com.example.microapp.feature.games.tap
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.example.microapp.data.model.Spark
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,13 +16,13 @@ class TapGameViewModel : ViewModel() {
         val timeLeft: Int = 30,
         val isStarted: Boolean = false,
         val isDone: Boolean = false,
-        val reward: Int = 0
+        val reward: Int = 0,
+        val sparks: List<Spark> = emptyList()
     )
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    val sparks = mutableStateListOf<Spark>()
     private var idCounter = 0
 
     fun startGame() {
@@ -31,10 +30,14 @@ class TapGameViewModel : ViewModel() {
     }
 
     fun tapSpark(id: Int) {
-        sparks.removeAll { it.id == id }
-        _uiState.update {
-            val newScore = it.score + 1
-            it.copy(score = newScore, reward = min(newScore * 2, 20))
+        _uiState.update { state ->
+            val updatedSparks = state.sparks.filterNot { it.id == id }
+            val newScore = state.score + 1
+            state.copy(
+                score = newScore,
+                reward = min(newScore * 2, 20),
+                sparks = updatedSparks
+            )
         }
     }
 
@@ -46,19 +49,23 @@ class TapGameViewModel : ViewModel() {
             y = Random.nextFloat() * 0.70f,
             size = 28f + Random.nextFloat() * 20f
         )
-        if (sparks.size > 10) {
-            sparks.removeAt(0)
+        _uiState.update { state ->
+            val list = state.sparks.toMutableList()
+            if (list.size >= 10) {
+                list.removeAt(0)
+            }
+            list.add(newSpark)
+            state.copy(sparks = list)
         }
-        sparks.add(newSpark)
     }
 
     fun decrementTimer() {
-        _uiState.update {
-            val newTime = it.timeLeft - 1
+        _uiState.update { state ->
+            val newTime = state.timeLeft - 1
             if (newTime <= 0) {
-                it.copy(timeLeft = 0, isDone = true, reward = min(it.score * 2, 20))
+                state.copy(timeLeft = 0, isDone = true, reward = min(state.score * 2, 20))
             } else {
-                it.copy(timeLeft = newTime)
+                state.copy(timeLeft = newTime)
             }
         }
     }

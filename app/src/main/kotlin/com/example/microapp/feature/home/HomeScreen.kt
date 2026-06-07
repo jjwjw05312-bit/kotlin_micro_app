@@ -33,8 +33,7 @@ fun HomeScreen(onNavigate: (Screen) -> Unit, viewModel: HomeViewModel = viewMode
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
-            .padding(bottom = 90.dp),
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         // --- Header ---

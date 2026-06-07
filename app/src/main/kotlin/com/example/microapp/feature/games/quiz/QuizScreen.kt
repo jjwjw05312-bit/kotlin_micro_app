@@ -34,11 +34,12 @@ fun QuizScreen(onNavigate: (Screen) -> Unit, viewModel: QuizViewModel = viewMode
     // Timer: counts down every second; auto-advances when 0
     LaunchedEffect(uiState.currentIndex, uiState.isDone, uiState.selectedAnswer) {
         if (uiState.isDone || uiState.selectedAnswer != null) return@LaunchedEffect
-        while (uiState.timeLeft > 0 && !uiState.isDone && uiState.selectedAnswer == null) {
+        for (time in 15 downTo 1) {
             delay(1000)
+            if (uiState.isDone || uiState.selectedAnswer != null) break
             viewModel.decrementTimer()
         }
-        if (uiState.timeLeft <= 0 && uiState.selectedAnswer == null && !uiState.isDone) {
+        if (uiState.selectedAnswer == null && !uiState.isDone) {
             viewModel.advanceQuestion()
         }
     }
@@ -55,7 +56,7 @@ fun QuizScreen(onNavigate: (Screen) -> Unit, viewModel: QuizViewModel = viewMode
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 24.dp, end = 24.dp, top = 40.dp, bottom = 90.dp),
+                .padding(start = 24.dp, end = 24.dp, top = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("🧠", fontSize = 60.sp, modifier = Modifier.padding(bottom = 12.dp))
@@ -109,7 +110,7 @@ fun QuizScreen(onNavigate: (Screen) -> Unit, viewModel: QuizViewModel = viewMode
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, top = 20.dp, bottom = 90.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 20.dp)
     ) {
         // Top bar: Back, Tag, Timer
         Row(

@@ -33,7 +33,7 @@ fun TapGameScreen(onNavigate: (Screen) -> Unit, viewModel: TapGameViewModel = vi
     // Countdown timer
     LaunchedEffect(uiState.isStarted, uiState.isDone) {
         if (!uiState.isStarted || uiState.isDone) return@LaunchedEffect
-        while (uiState.timeLeft > 0) {
+        for (time in 30 downTo 1) {
             delay(1000)
             viewModel.decrementTimer()
         }
@@ -54,7 +54,7 @@ fun TapGameScreen(onNavigate: (Screen) -> Unit, viewModel: TapGameViewModel = vi
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 24.dp, end = 24.dp, top = 40.dp, bottom = 90.dp),
+                .padding(start = 24.dp, end = 24.dp, top = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("🎯", fontSize = 60.sp, modifier = Modifier.padding(bottom = 12.dp))
@@ -200,7 +200,7 @@ fun TapGameScreen(onNavigate: (Screen) -> Unit, viewModel: TapGameViewModel = vi
                 )
 
                 // Sparks
-                viewModel.sparks.forEach { s ->
+                uiState.sparks.forEach { s ->
                     Text(
                         "⚡",
                         fontSize = s.size.sp,

@@ -2,8 +2,8 @@ package com.example.microapp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.microapp.core.theme.C
 import com.example.microapp.feature.home.HomeScreen
@@ -28,14 +28,24 @@ fun InstaVaultApp() {
     // Active nav calculation — delegates to companion method
     val activeScreen = Screen.activeNavFor(currentScreen.route)
 
-    Box(
+    Scaffold(
+        bottomBar = {
+            BottomNavBar(
+                activeScreen = activeScreen,
+                onNavigate = { currentScreen = it }
+            )
+        },
+        containerColor = C.bg,
         modifier = Modifier
             .fillMaxSize()
-            .background(C.bg)
             .systemBarsPadding() // Prevents overlap with time/battery
-    ) {
+    ) { innerPadding ->
         // Screen content
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             when (currentScreen) {
                 Screen.Home -> HomeScreen(onNavigate = { currentScreen = it })
                 Screen.Tasks -> TasksScreen(onNavigate = { currentScreen = it })
@@ -48,12 +58,5 @@ fun InstaVaultApp() {
                 else -> HomeScreen(onNavigate = { currentScreen = it })
             }
         }
-
-        // Bottom Navigation — always visible, fixed at bottom
-        BottomNavBar(
-            activeScreen = activeScreen,
-            onNavigate = { currentScreen = it },
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
     }
 }

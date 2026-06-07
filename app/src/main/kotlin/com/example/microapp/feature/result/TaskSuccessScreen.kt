@@ -26,7 +26,7 @@ fun TaskSuccessScreen(onNavigate: (Screen) -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(start = 24.dp, end = 24.dp, top = 40.dp, bottom = 90.dp),
+            .padding(start = 24.dp, end = 24.dp, top = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Big emoji

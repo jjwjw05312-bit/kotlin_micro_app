@@ -19,16 +19,19 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.microapp.core.theme.C
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import com.example.microapp.navigation.Screen
 
 @Composable
 fun GamesScreen(onNavigate: (Screen) -> Unit, viewModel: GamesViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 90.dp)
+            .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Text(
@@ -74,7 +77,13 @@ fun GamesScreen(onNavigate: (Screen) -> Unit, viewModel: GamesViewModel = viewMo
                                     )
                                 )
                                 .border(1.dp, g.color.copy(alpha = 0.2f), RoundedCornerShape(20.dp))
-                                .clickable { onNavigate(targetScreen) }
+                                .clickable {
+                                    if (g.routeId == "cards" || g.routeId == "math" || g.routeId == "words") {
+                                        Toast.makeText(context, "${g.title} is Coming Soon! ⏳", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        onNavigate(targetScreen)
+                                    }
+                                }
                                 .padding(vertical = 18.dp, horizontal = 14.dp)
                         ) {
                             Text(
