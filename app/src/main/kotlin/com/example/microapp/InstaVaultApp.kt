@@ -18,7 +18,7 @@ import com.example.microapp.navigation.BottomNavBar
 import com.example.microapp.navigation.Screen
 
 /**
- * Main App composable — matches JSX: export default function App()
+ * Main App composble — matches JSX: export default function App()
  * Handles screen routing and bottom navigation.
  */
 @Composable
